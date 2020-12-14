@@ -12,13 +12,13 @@ class myOrder extends Model
 
     public function product(){
 
-        return $this->hasMany('App\Product');
+        return $this->hasMany('App\Models\Product');
 
     }
 
     public function user(){
 
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
 
     }
 }
