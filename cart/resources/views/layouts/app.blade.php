@@ -30,6 +30,13 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+                <!--search form-->
+                <form action="{{ route('search.product') }}" method="post">
+                     @csrf
+                    <input  type="text" name="searchProduct" id="searchProduct">
+                    <button class="btn btn-info" type="submit">Search</button>
+                </form>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
