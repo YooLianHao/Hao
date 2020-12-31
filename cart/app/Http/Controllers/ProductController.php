@@ -109,4 +109,17 @@ class productController extends Controller
                                 ->with('categories',Category::all());
     }
 
+    public function index(){
+
+        return view('search');
+    }
+  
+   
+    public function autoComplete(Request $request){
+        $data = Product::select("name")
+                ->where("name","LIKE", '%'.$request->get('query').'%')
+                ->get();
+        return response()->json($data);
+    }
+
 }

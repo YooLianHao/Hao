@@ -22,25 +22,48 @@ class CartController extends Controller
         
         $addCategory=myCart::create([    
             'orderID'=>'',
-            'userID'=>Auth::id(),  
-            'productID'=>$r->ID, 
-            'quantity'=>$r->quantity,
+            'userID'=>Auth::id(), 
+            'quantity'=>$r->quantity, 
+            'productID'=>$r->id, 
             
         ]);
         Session::flash('success',"Product added to Cart succesfully!");
 
-        return redirect()->route('products');
+        return redirect()->route('product');
     }
 
-    public function showMyCart(){
+    public function show(){
         $carts =DB::table('my_carts')
+        ->leftjoin('products','products.id','=','my_carts.productID')
+        ->select('my_carts.quantity as cartQty','my_carts.id as cid','products.*')
+        ->where('my_carts.orderID','=','') //'' haven't make payment
+        ->where('my_carts.userID','=',Auth::id())
+        
+        //->get();
+          //$products=Product::all();
+          ->paginate(12);
+          return view('myCart')->with('carts',$carts);
+      }
+
+    public function showMyCart(){
+      $carts =DB::table('my_carts')
       ->leftjoin('products','products.id','=','my_carts.productID')
-      ->select('my_cart.quantity as cartQty','products.*')
+      ->select('my_carts.quantity as cartQty','my_carts.id as cid','products.*')
+      ->where('my_carts.orderID','=','') //'' haven't make payment
+      ->where('my_carts.userID','=',Auth::id())
       
       //->get();
         //$products=Product::all();
         ->paginate(12);
         return view('myCart')->with('carts',$carts);
     }
+
+    public function delete($id){
+        $carts=myCart::find($id);
+        $carts->delete();
+        return redirect()->route('show.myCart');
+    }
+    
+   
 
 }

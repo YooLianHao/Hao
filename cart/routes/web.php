@@ -56,19 +56,37 @@ Route::get('/product', [App\Http\Controllers\ProductController::class, 'showProd
 Route::get('/product_detail/{id}', [App\Http\Controllers\ProductController::class, 'showProductDetail'])->name('product.detail');
 //productDetail.blade.php?id=1
 
+Route::get('/search',[App\Http\Controllers\ProductController::class, 'index'])->name('search');
+
+Route::get('/autoComplete',[App\Http\Controllers\ProductController::class, 'autoComplete'])->name('autoComplete');
+
+
+
 Route::post('addToCart', [App\Http\Controllers\CartController::class, 'add'])->name('add.to.cart');
 // when user click on add to cart in product detail, id and quantity add to cart
 
-Route::get('/myCart', [App\Http\Controllers\CartController::class, 'show'])->name('my.cart');
+Route::get('/myCart', [App\Http\Controllers\CartController::class, 'showMyCart'])->name('my.cart');
  //user view all items added to cart
 
-Route::get('/showmyCart', [App\Http\Controllers\CartController::class, 'showMyCart'])->name('show.myCart');
+Route::get('/showmyCart', [App\Http\Controllers\CartController::class, 'show'])->name('show.myCart');
+
+Route::get('/deletemyCart/{id}', [App\Http\Controllers\CartController::class, 'delete'])->name('deletemyCart');
+
+Route::post('/createorder', [App\Http\Controllers\OrderController::class, 'add'])->name('create.order');
+
+Route::get('/myOrder', [App\Http\Controllers\OrderController::class, 'show'])->name('myOrder');
+
+//route for processing payment
+Route::post('/paypal', [App\Http\Controllers\PaymentController::class, 'payWithpaypal'])->name('paypal');
+
+//route for check status of the payment
+Route::post('/status', [App\Http\Controllers\PaymentController::class, 'getPaymentStatus'])->name('status');
 
 
 
 Route::get('/showClientProduct', [App\Http\Controllers\ClientProductController::class, 'show'])->name('showClientProduct');
 
-Route::post('/searchClientProduct', [App\Http\Controllers\ClientProductController::class, 'search'])->name('search.product');
+//Route::post('/searchClientProduct', [App\Http\Controllers\ClientProductController::class, 'search'])->name('search.product');
 
 
 Auth::routes();

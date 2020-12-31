@@ -19,7 +19,7 @@ class ClientProductController extends Controller
 
     public function search(){
         $r=request();//retrive submited form data
-        $keyword=$r ->searchProduct;
+        $keyword=$r ->searchClientProduct;
         $products =DB::table('products')
         ->leftjoin('categories','categories.id','=','products.categoryID')
         ->select('categories.name as catname','categories.id as catid','products.*')
